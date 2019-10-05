@@ -1,6 +1,6 @@
 # @project Jetson GPIO library project makefile
 # @date October 5 2019
-# @author Aqeel AlShafei <alshafeia@msoe.edu>
+# @author Aqeel AlShafei
 
 # Target executable
 TARGET_EXEC = jetson
