@@ -28,6 +28,8 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
+	scanf("pause");
+
 	if (gpio_unexport(outPin) != 0) {
 		perror("Error unexporting pin");
 		return EXIT_FAILURE;
