@@ -106,7 +106,7 @@ int gpio_write(unsigned int gpio, unsigned int value);
  *
  * @param gpio GPIO pin number
  *
- * @return Value of GPIO pin as HIGH or LOW
+ * @return Value of GPIO pin as HIGH or LOW, or -1 on failure and errno is set
  */
 int gpio_read(unsigned int gpio);
 

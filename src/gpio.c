@@ -76,6 +76,24 @@ int gpio_unexport(unsigned int gpio) {
  */
 int gpio_set_dir(unsigned int gpio, unsigned int direction) {
 	
+	int fd, len;
+	char buf[MAX_BUF];
+
+	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/direction", gpio);
+
+	fd = open(buf, O_WRONLY);
+	if (fd < 0) {
+		return fd;
+	}
+
+	if (direction == OUTPUT) {
+		write(fd, "out", 4);
+	} else {
+		write(fd, "in", 3);
+	}
+
+	close(fd);
+
 	return 0;
 }
 
@@ -90,6 +108,24 @@ int gpio_set_dir(unsigned int gpio, unsigned int direction) {
  * @return 0 on success, or -1 on failure and errno is set
  */
 int gpio_write(unsigned int gpio, unsigned int value) {
+	
+	int fd, len;
+	char buf[MAX_BUF];
+
+	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", gpio);
+
+	fd = open(buf, O_WRONLY);
+	if (fd < 0) {
+		return fd;
+	}
+
+	if (value == LOW) {
+		write(fd, "0", 2);
+	} else {
+		write(fd, "1", 2);
+	}
+
+	close(fd);
 
 	return 0;
 }
@@ -101,11 +137,25 @@ int gpio_write(unsigned int gpio, unsigned int value) {
  *
  * @param gpio GPIO pin number
  *
- * @return Value of GPIO pin as HIGH or LOW
+ * @return Value of GPIO pin as HIGH or LOW, or -1 on failure and errno is set
  */
 int gpio_read(unsigned int gpio) {
 	
-	return 0;
+	int fd, len;
+	char buf[MAX_BUF];
+	char ch;
+
+	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", gpio);
+
+	fd = open(buf, O_RDONLY);
+	if (fd < 0) {
+		return fd;
+	}
+
+	read(fd, &ch, 2);
+	close(fd);
+
+	return (int)ch;
 }
 
 /**
