@@ -4,6 +4,8 @@
  * @author Aqeel AlShafei, Isaiah Rondeau
  */
 
+#include "gpio.h"
+
 int main(int argc, char* argv[]) {
 
     return 0;

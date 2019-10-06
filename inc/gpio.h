@@ -9,6 +9,12 @@
 #ifndef GPIO_H
 #define GPIO_H
 
+// GPIO system file directory
+#define SYSFS_GPIO_DIR "/sys/class/gpio"
+
+// Max buffer length to write to system files
+#define MAX_BUF 64
+
 // GPIO Pin mapping flags
 #define PIN_7	216
 #define PIN_11	50
@@ -70,9 +76,9 @@ int gpio_export(unsigned int gpio);
 int gpio_unexport(unsigned int gpio);
 
 /**
- * @breif
+ * @breif Assign GPIO pin as INPUT/OUTPUT
  *
- *
+ * Assign the given GPIO pin to read either input or output
  *
  * @param gpio GPIO pin number
  * @param direction Direction OUTPUT/INPUT to assign pin
@@ -82,33 +88,33 @@ int gpio_unexport(unsigned int gpio);
 int gpio_set_dir(unsigned int gpio, unsigned int direction);
 
 /**
- * @brief
+ * @brief Set GPIO value to HIGH/LOW
  * 
- * 
+ * Set the given GPIO pin value to either high or low
  *
  * @param gpio GPIO pin number
  * @param value Pin value to set
  *
  * @return 0 on success, or -1 on failure and errno is set
  */
-int gpio_set_val(unsigned int gpio, unsigned int value);
+int gpio_write(unsigned int gpio, unsigned int value);
 
 /**
- * @breif
+ * @breif Read GPIO value
  *
- * 
+ * Read the given GPIO pin value as either high or low
  *
- * @param
+ * @param gpio GPIO pin number
  *
- * @return Value of GPIO pin
+ * @return Value of GPIO pin as HIGH or LOW
  */
-int gpio_get_val(unsigned int gpio);
+int gpio_read(unsigned int gpio);
 
 
 /**
- * @brief
+ * @brief Set GPIO to read active low
  * 
- * 
+ * Set the GPIO pin to read values in the active low state
  *
  * @param gpio GPIO pin number
  * @param option Write any number greater than zero to set the logic to active low
