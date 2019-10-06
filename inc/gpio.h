@@ -53,6 +53,10 @@
 #define FALLING	"falling"
 #define BOTH	"both"
 
+// GPIO Active low mapping flags
+#define FALSE	0
+#define TRUE	1
+
 /**
  * @brief Export control of userspace to file
  * 
@@ -110,6 +114,17 @@ int gpio_write(unsigned int gpio, unsigned int value);
  */
 int gpio_read(unsigned int gpio);
 
+/**
+ * @breif Set GPIO edge trigger
+ *
+ * Set the given GPIO pin to change value based on the rising or falling edge
+ *
+ * @param gpio GPIO pin number
+ * @param edge Edge value RISING, FALLING, BOTH, or NONE
+ *
+ * @return 0 on success, or -1 on failure and errno is set
+ */
+int gpio_set_edge(unsigned int gpio, char* edge);
 
 /**
  * @brief Set GPIO to read active low

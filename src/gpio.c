@@ -8,6 +8,7 @@
 
 #include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "gpio.h"
@@ -159,6 +160,34 @@ int gpio_read(unsigned int gpio) {
 }
 
 /**
+ * @breif Set GPIO edge trigger
+ *
+ * Set the given GPIO pin to change value based on the rising or falling edge
+ *
+ * @param gpio GPIO pin number
+ * @param edge Edge value RISING, FALLING, BOTH, or NONE
+ *
+ * @return 0 on success, or -1 on failure and errno is set
+ */
+int gpio_set_edge(unsigned int gpio, char* edge) {
+	
+	int fd, len;
+	char buf[MAX_BUF];
+
+	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/active_low", gpio);
+
+	fd = open(buf, O_WRONLY);
+	if (fd < 0) {
+		return fd;
+	}
+
+	write(fd, edge, strlen(edge) + 1);
+	close(fd);
+
+	return 0;
+}
+
+/**
  * @brief Set GPIO to read active low
  * 
  * Set the GPIO pin to read values in the active low state
@@ -169,6 +198,24 @@ int gpio_read(unsigned int gpio) {
  * @return 0 on success, or -1 on failure and errno is set
  */
 int gpio_set_active_low(unsigned int gpio, unsigned int option) {
+	
+	int fd, len;
+	char buf[MAX_BUF];
+
+	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/active_low", gpio);
+
+	fd = open(buf, O_WRONLY);
+	if (fd < 0) {
+		return fd;
+	}
+
+	if (option == FALSE) {
+		write(fd, "0", 2);
+	} else {
+		write(fd, "1", 2);
+	}
+
+	close(fd);
 
 	return 0;
 }

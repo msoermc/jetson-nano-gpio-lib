@@ -28,6 +28,16 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
+	if (gpio_set_edge(outPin, BOTH) != 0) {
+		perror("Error setting pin edge");
+		return EXIT_FAILURE;
+	}
+
+	if (gpio_set_active_low(outPin, TRUE) != 0) {
+		perror("Error writing pin active low");
+		return EXIT_FAILURE;
+	}
+
 	scanf("pause");
 
 	if (gpio_unexport(outPin) != 0) {
