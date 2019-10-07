@@ -10,7 +10,13 @@
 #define GPIO_H
 
 // GPIO system file directory
-#define SYSFS_GPIO_DIR "/sys/class/gpio"
+#define SYSFS_GPIO_DIR 			"/sys/class/gpio"
+#define SYSFS_GPIO_EXPORT		"export"
+#define SYSFS_GPIO_UNEXPORT		"unexport"
+#define SYSFS_GPIO_DIRECTION	"direction"
+#define SYSFS_GPIO_VALUE 		"value"
+#define SYSFS_GPIO_EDGE			"edge"
+#define SYSFS_GPIO_ACTIVE_LOW	"active_low"
 
 // Max buffer length to write to system files
 #define MAX_BUF 64
@@ -137,5 +143,17 @@ int gpio_set_edge(unsigned int gpio, char* edge);
  * @return 0 on success, or -1 on failure and errno is set
  */
 int gpio_set_active_low(unsigned int gpio, unsigned int option);
+
+/**
+ * @brief Open GPIO file descriptor
+ *
+ * Open the given GPIO pin's file descriptor
+ *
+ * @param gpio GPIO pin number
+ * @param sysfs_file File to open file descriptor from
+ *
+ * @return 0 on success, or -1 on failure and errno is set
+ */
+int gpio_fd_open(unsigned int gpio, char* sysfs_file, int flags);
 
 #endif
