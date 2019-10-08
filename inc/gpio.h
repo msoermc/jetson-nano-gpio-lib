@@ -153,7 +153,7 @@ int gpio_set_active_low(unsigned int gpio, unsigned int option);
  * @param sysfs_file File to open file descriptor from
  * @param flags File descriptor open() flags
  *
- * @return 0 on success, or -1 on failure and errno is set
+ * @return File descriptor on success, or -1 on failure and errno is set
  */
 int gpio_fd_open(unsigned int gpio, char* sysfs_file, int flags);
 

@@ -205,13 +205,17 @@ int gpio_set_active_low(unsigned int gpio, unsigned int option) {
  * @param sysfs_file File to open file descriptor from
  * @param flags File descriptor open() flags
  *
- * @return 0 on success, or -1 on failure and errno is set
+ * @return File descriptor on success, or -1 on failure and errno is set
  */
 int gpio_fd_open(unsigned int gpio, char* sysfs_file, int flags) {
 	
 	char buf[MAX_BUF];
 
-	snprintf(buf, sizeof(buf), "%s/gpio%d/%s", SYSFS_GPIO_DIR, gpio, sysfs_file);
+	if (sysfs_file == SYSFS_GPIO_EXPORT || sysfs_file == SYSFS_GPIO_UNEXPORT) {
+		snprintf(buf, sizeof(buf), "%s/%s", SYSFS_GPIO_DIR, sysfs_file);
+	} else {
+		snprintf(buf, sizeof(buf), "%s/gpio%d/%s", SYSFS_GPIO_DIR, gpio, sysfs_file);
+	}
 
 	return open(buf, flags);
 }
