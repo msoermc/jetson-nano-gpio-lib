@@ -11,36 +11,35 @@
 
 int main(int argc, char* argv[]) {
 
-	int outPin = PIN_7;
+	int inPin = PIN_7;
 
-	if (gpio_export(outPin) != 0) {
+	if (gpio_export(inPin) != 0) {
 		perror("Error exporting pin");
 		return EXIT_FAILURE;
 	}
 
-	if (gpio_set_dir(outPin, OUTPUT) != 0) {
+	if (gpio_set_dir(inPin, INPUT) != 0) {
 		perror("Error setting pin direction");
 		return EXIT_FAILURE;
 	}
 
-	if (gpio_write(outPin, HIGH) != 0) {
-		perror("Error writing pin HIGH");
-		return EXIT_FAILURE;
-	}
-
-//	if (gpio_set_edge(outPin, BOTH) != 0) {
+//	if (gpio_set_edge(inPin, BOTH) != 0) {
 //		perror("Error setting pin edge");
 //		return EXIT_FAILURE;
 //	}
 //
-//	if (gpio_set_active_low(outPin, TRUE) != 0) {
+//	if (gpio_set_active_low(inPin, TRUE) != 0) {
 //		perror("Error writing pin active low");
 //		return EXIT_FAILURE;
 //	}
 
+	for (int i = 0; i < 100; i++) {
+		printf("%d\n", gpio_read(inPin));
+	}
+
 	scanf("pause");
 
-	if (gpio_unexport(outPin) != 0) {
+	if (gpio_unexport(inPin) != 0) {
 		perror("Error unexporting pin");
 		return EXIT_FAILURE;
 	}

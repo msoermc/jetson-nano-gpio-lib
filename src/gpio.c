@@ -139,10 +139,14 @@ int gpio_read(unsigned int gpio) {
 		return fd;
 	}
 
-	read(fd, &ch, 2);
+	read(fd, &ch, 1);
 	close(fd);
 
-	return (int)ch;
+	if (ch == '0') {
+		return 0;
+	} else {
+		return 1;
+	}
 }
 
 /**
