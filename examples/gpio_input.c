@@ -18,12 +18,12 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	if (gpio_set_dir(inPin, OUTPUT) != 0) {
+	if (gpio_set_dir(inPin, INPUT) != 0) {
 		perror("Error setting pin direction");
 		return EXIT_FAILURE;
 	}
 
-//	if (gpio_set_active_low(outPin, TRUE) != 0) {
+//	if (gpio_set_active_low(inPin, TRUE) != 0) {
 //		perror("Error writing pin active low");
 //		return EXIT_FAILURE;
 //	}
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 
 	scanf("pause");
 
-	if (gpio_unexport(outPin) != 0) {
+	if (gpio_unexport(inPin) != 0) {
 		perror("Error unexporting pin");
 		return EXIT_FAILURE;
 	}
